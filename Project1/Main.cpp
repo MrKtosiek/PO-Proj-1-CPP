@@ -1,4 +1,5 @@
 #include <conio.h>
+#include <stdlib.h>
 #include <iostream>
 
 #include "World.h"
@@ -14,18 +15,24 @@ using namespace std;
 
 void Program()
 {
-	World world;
+	World world(15, 30);
 
 	Human* player = new Human({ world.GetSize().x / 2, world.GetSize().y / 2 }); // deallocated by the world object
 	world.AddOrganism((Organism*)player);
+
+	world.GenerateOrganisms();
+
+	world.DrawWorld();
 
 	char input = 0;
 	while (input != 'q')
 	{
 		input = _getch();
 
-		player->SetNextAction(input);
+		if (player != nullptr)
+			player->SetNextAction(input);
 
+		//system("cls"); // clear the screen
 		world.ExecuteTurn();
 		world.DrawWorld();
 	}
@@ -33,6 +40,7 @@ void Program()
 
 int main()
 {
+	srand(time(nullptr));
 	Program();
 	_CrtDumpMemoryLeaks();
 	return 0;

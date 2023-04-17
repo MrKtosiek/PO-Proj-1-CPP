@@ -1,5 +1,6 @@
 #include <conio.h>
 #include "Human.h"
+#include "World.h"
 #include <stdlib.h>
 
 Human::Human(const Vector2& pos) : Animal(pos, 'H')
@@ -8,6 +9,25 @@ Human::Human(const Vector2& pos) : Animal(pos, 'H')
 
 Human::~Human()
 {
+}
+
+void Human::Action()
+{
+	if (nextAction == HumanAction::NONE)
+		return;
+
+	Vector2 target = pos;
+	
+	if (nextAction == HumanAction::UP)
+		target = { pos.x - 1, pos.y };
+	if (nextAction == HumanAction::DOWN)
+		target = { pos.x + 1, pos.y };
+	if (nextAction == HumanAction::LEFT)
+		target = { pos.x, pos.y - 1 };
+	if (nextAction == HumanAction::RIGHT)
+		target = { pos.x, pos.y + 1 };
+
+	MoveTo(target);
 }
 
 void Human::SetNextAction(char code)
@@ -30,6 +50,7 @@ void Human::SetNextAction(char code)
 		nextAction = HumanAction::ABILITY;
 		break;
 	default:
+		nextAction = HumanAction::NONE;
 		break;
 	}
 }

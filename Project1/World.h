@@ -9,14 +9,16 @@ class World
 {
 public:
 	World();
-	World(int width, int height);
+	World(int height, int width);
 	~World();
 
 	void AddOrganism(Organism* org);
-	Organism* GetOrganism(const Vector2& pos);
+	void GenerateOrganisms();
+	Organism* GetOrganism(const Vector2& pos) const;
 	const Vector2& GetSize() const;
 
 	bool ContainsPos(Vector2 pos) const;
+	Vector2 GetRandomEmptyTile() const;
 
 	void ExecuteTurn();
 	void DrawWorld();

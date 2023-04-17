@@ -1,5 +1,6 @@
 #include <conio.h>
 #include "World.h"
+#include "Human.h"
 
 World::World() : World::World(15, 15)
 {
@@ -20,7 +21,16 @@ void World::AddOrganism(Organism* org)
 	organisms.push_back(org);
 }
 
-Organism* World::GetOrganism(const Vector2& pos)
+void World::GenerateOrganisms()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		Human* newHuman = new Human(GetRandomEmptyTile());
+		AddOrganism(newHuman);
+	}
+}
+
+Organism* World::GetOrganism(const Vector2& pos) const
 {
 	for (size_t i = 0; i < organisms.size(); i++)
 	{
@@ -42,22 +52,39 @@ bool World::ContainsPos(Vector2 pos) const
 		pos.y >= 0 && pos.y < size.y;
 }
 
+Vector2 World::GetRandomEmptyTile() const
+{
+	Vector2 pos = {};
+
+	const int safetyLimit = 1000;
+	for (int i = 0; i < safetyLimit; i++)
+	{
+		pos.x = rand() % size.x;
+		pos.y = rand() % size.y;
+		// if there is no organism on the chosen tile, return the position
+		if (GetOrganism(pos) == nullptr)
+			break;
+	}
+
+	return pos;
+}
+
 void World::ExecuteTurn()
 {
 	// order organisms by their priority
 	std::sort(organisms.begin(), organisms.end());
 
 	// execute actions
-	for (size_t i = 0; i < organisms.size(); i++)
+	for (Organism* org : organisms)
 	{
-		organisms[i]->Action();
+		org->Action();
 		
 		// handle collisions
-		for (size_t j = 0; j < organisms.size(); j++)
+		for (Organism* other : organisms)
 		{
-			if (i != j && organisms[i]->GetPosition() == organisms[j]->GetPosition())
+			if (org != other && org->GetPosition() == other->GetPosition())
 			{
-				organisms[i]->Collision(organisms[j]);
+				org->Attack(other);
 			}
 		}
 	}
@@ -86,7 +113,7 @@ void World::DrawWorld()
 		_putch('-');
 	_cputs("#\n");
 
-	// draw the buffer on the console (with a frame)
+	// draw the buffer on the console
 	for (int x = 0; x < size.x; x++)
 	{
 		_putch('|'); // vertical line

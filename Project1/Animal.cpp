@@ -22,15 +22,27 @@ void Animal::Action()
 		}
 	}
 
-
 	currentBreedingCooldown--;
 }
 
-void Animal::Collision(Organism* other)
+void Animal::Attack(Organism* other)
 {
 	if (typeid(this) == typeid(other))
 	{
 		// breed the animals
 		std::cout << "Breeding on " << pos.x << ',' << pos.y;
+	}
+}
+
+void Animal::MoveTo(const Vector2& target)
+{
+	if (world->ContainsPos(target))
+	{
+		pos = target;
+		printf("%s moved to %d,%d\n", typeid(*this).name(), pos.x, pos.y);
+	}
+	else
+	{
+		printf("%s couldn't move to %d,%d\n", typeid(*this).name(), target.x, target.y);
 	}
 }
