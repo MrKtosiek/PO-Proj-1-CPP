@@ -4,7 +4,7 @@ struct Vector2
 {
 	int x, y;
 
-	Vector2 GetNeighbor(int i)
+	Vector2 GetNeighbor(int i) const
 	{
 		if (i == 0) return { x, y + 1 };
 		if (i == 1) return { x + 1, y };

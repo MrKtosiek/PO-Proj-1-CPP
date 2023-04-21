@@ -19,6 +19,8 @@ public:
 
 	bool ContainsPos(Vector2 pos) const;
 	Vector2 GetRandomEmptyTile() const;
+	bool HasEmptyNeighbor(const Vector2 pos) const;
+	Vector2 GetEmptyNeighbor(const Vector2 pos) const;
 
 	void ExecuteTurn();
 	void DrawWorld();
@@ -26,4 +28,5 @@ public:
 private:
 	Vector2 size;
 	std::vector<Organism*> organisms;
+	size_t turnNumber = 0;
 };

@@ -15,7 +15,7 @@ using namespace std;
 
 void Program()
 {
-	World world(15, 30);
+	World world(10, 10);
 
 	Human* player = new Human({ world.GetSize().x / 2, world.GetSize().y / 2 }); // deallocated by the world object
 	world.AddOrganism((Organism*)player);

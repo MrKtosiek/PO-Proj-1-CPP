@@ -4,34 +4,35 @@
 #include <typeinfo>
 #include <iostream>
 
-Animal::Animal(const Vector2& pos, const char symbol) : Organism(pos, symbol)
+Animal::Animal(const Vector2& pos, const int priority, const int strength, const char symbol) : Organism(pos, priority, strength, symbol)
 {
 }
 
 void Animal::Action()
 {
-	// move the animal
-	const size_t safetyLimit = 10;
-	for (size_t i = 0; i < safetyLimit; i++)
-	{
-		Vector2 target = pos.GetNeighbor(std::rand() % 4);
-		if (world->ContainsPos(target))
-		{
-			pos = target;
-			break;
-		}
-	}
+	Movement();
 
 	currentBreedingCooldown--;
 }
 
-void Animal::Attack(Organism* other)
+void Animal::Collide(Organism* other)
 {
-	if (typeid(this) == typeid(other))
+	std::cout << "Collision on " << pos.x << ',' << pos.y << " (" << GetName() << ", " << other->GetName() << ")\n";
+	if (GetName() == other->GetName())
 	{
 		// breed the animals
-		std::cout << "Breeding on " << pos.x << ',' << pos.y;
+		std::cout << "Breeding on " << pos.x << ',' << pos.y << '\n';
 	}
+	else
+	{
+		// attack the other animal
+
+	}
+}
+
+void Animal::Movement()
+{
+	MoveTo(pos.GetNeighbor(rand() % 4));
 }
 
 void Animal::MoveTo(const Vector2& target)
@@ -39,10 +40,10 @@ void Animal::MoveTo(const Vector2& target)
 	if (world->ContainsPos(target))
 	{
 		pos = target;
-		printf("%s moved to %d,%d\n", typeid(*this).name(), pos.x, pos.y);
+		std::cout << GetName() << " moved to " << pos.x << ',' << pos.y << '\n';
 	}
 	else
 	{
-		printf("%s couldn't move to %d,%d\n", typeid(*this).name(), target.x, target.y);
+		std::cout << GetName() << " couldn't move to " << target.x << ',' << target.y << '\n';
 	}
 }

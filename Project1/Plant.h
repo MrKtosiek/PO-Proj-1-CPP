@@ -1,7 +1,7 @@
 #pragma once
 #include "Organism.h"
 
-class Plant : protected Organism
+class Plant : public Organism
 {
 public:
 	

@@ -1,6 +1,8 @@
 #include <conio.h>
 #include "World.h"
-#include "Human.h"
+#include "Wolf.h"
+#include "Sheep.h"
+#include <iostream>
 
 World::World() : World::World(15, 15)
 {
@@ -25,8 +27,10 @@ void World::GenerateOrganisms()
 {
 	for (int i = 0; i < 3; i++)
 	{
-		Human* newHuman = new Human(GetRandomEmptyTile());
-		AddOrganism(newHuman);
+		Wolf* newWolf = new Wolf(GetRandomEmptyTile());
+		AddOrganism(newWolf);
+		Sheep* newSheep = new Sheep(GetRandomEmptyTile());
+		AddOrganism(newSheep);
 	}
 }
 
@@ -69,10 +73,44 @@ Vector2 World::GetRandomEmptyTile() const
 	return pos;
 }
 
+bool World::HasEmptyNeighbor(const Vector2 pos) const
+{
+	for (size_t i = 0; i < 4; i++)
+	{
+		Vector2 n = pos.GetNeighbor(i);
+		if (ContainsPos(n) && GetOrganism(n) == nullptr)
+			return true;
+	}
+	return false;
+}
+
+Vector2 World::GetEmptyNeighbor(const Vector2 pos) const
+{
+	std::vector<Vector2> targets;
+	for (size_t i = 0; i < 4; i++)
+	{
+		Vector2 n = pos.GetNeighbor(i);
+		if (ContainsPos(n) && GetOrganism(n) == nullptr)
+			targets.push_back(n);
+	}
+
+	if (targets.size() == 0)
+		return targets[rand() % targets.size()];
+	else
+		return { -1,-1 };
+}
+
 void World::ExecuteTurn()
 {
 	// order organisms by their priority
-	std::sort(organisms.begin(), organisms.end());
+	struct ComparePriorities
+	{
+		bool operator() (const Organism* org1, const Organism* org2)
+		{
+			return (org1->GetPriority() > org2->GetPriority());
+		}
+	};
+	std::sort(organisms.begin(), organisms.end(), ComparePriorities());
 
 	// execute actions
 	for (Organism* org : organisms)
@@ -84,10 +122,12 @@ void World::ExecuteTurn()
 		{
 			if (org != other && org->GetPosition() == other->GetPosition())
 			{
-				org->Attack(other);
+				org->Collide(other);
 			}
 		}
 	}
+
+	std::cout << "Turn " << ++turnNumber << " finished\n";
 }
 
 void World::DrawWorld()

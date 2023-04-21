@@ -1,9 +1,8 @@
-#include <conio.h>
 #include "Human.h"
 #include "World.h"
 #include <stdlib.h>
 
-Human::Human(const Vector2& pos) : Animal(pos, 'H')
+Human::Human(const Vector2& pos) : Animal(pos, 4, 5, 'H')
 {
 }
 
@@ -11,7 +10,7 @@ Human::~Human()
 {
 }
 
-void Human::Action()
+void Human::Movement()
 {
 	if (nextAction == HumanAction::NONE)
 		return;
@@ -53,4 +52,9 @@ void Human::SetNextAction(char code)
 		nextAction = HumanAction::NONE;
 		break;
 	}
+}
+
+std::string Human::GetName() const
+{
+	return "Human";
 }
