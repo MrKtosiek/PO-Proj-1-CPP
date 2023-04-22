@@ -14,6 +14,7 @@ public:
 	void SetNextAction(const char code);
 
 	std::string GetName() const;
+	virtual void Die(Organism* killer) override;
 
 private:
 	enum class HumanAction

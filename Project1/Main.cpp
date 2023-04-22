@@ -4,6 +4,8 @@
 
 #include "World.h"
 #include "Human.h"
+#include "Wolf.h"
+#include "Sheep.h"
 #include "Animal.h"
 #include "Plant.h"
 
@@ -17,10 +19,22 @@ void Program()
 {
 	World world(10, 10);
 
+	// add the player
 	Human* player = new Human({ world.GetSize().x / 2, world.GetSize().y / 2 }); // deallocated by the world object
 	world.AddOrganism((Organism*)player);
 
-	world.GenerateOrganisms();
+	// populate the world
+	for (int i = 0; i < 2; i++)
+	{
+		Wolf* newWolf = new Wolf(world.GetRandomEmptyTile());
+		world.AddOrganism(newWolf);
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		Sheep* newSheep = new Sheep(world.GetRandomEmptyTile());
+		world.AddOrganism(newSheep);
+	}
+
 
 	world.DrawWorld();
 
@@ -29,7 +43,7 @@ void Program()
 	{
 		input = _getch();
 
-		if (player != nullptr)
+		if (world.IsPlayerAlive())
 			player->SetNextAction(input);
 
 		//system("cls"); // clear the screen

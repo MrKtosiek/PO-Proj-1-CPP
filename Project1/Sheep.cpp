@@ -2,7 +2,7 @@
 #include "World.h"
 #include <stdlib.h>
 
-Sheep::Sheep(const Vector2& pos) : Animal(pos, 4, 4, 'S')
+Sheep::Sheep(const Vector2& pos) : Animal(pos, 4, 4, 3, 'S')
 {
 }
 

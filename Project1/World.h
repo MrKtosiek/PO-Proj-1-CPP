@@ -13,9 +13,12 @@ public:
 	~World();
 
 	void AddOrganism(Organism* org);
-	void GenerateOrganisms();
+	void RemoveOrganism(Organism* org);
 	Organism* GetOrganism(const Vector2& pos) const;
 	const Vector2& GetSize() const;
+
+	bool IsPlayerAlive() const;
+	void SetPlayerAlive(const bool& value);
 
 	bool ContainsPos(Vector2 pos) const;
 	Vector2 GetRandomEmptyTile() const;
@@ -29,4 +32,5 @@ private:
 	Vector2 size;
 	std::vector<Organism*> organisms;
 	size_t turnNumber = 0;
+	bool playerAlive = true;
 };

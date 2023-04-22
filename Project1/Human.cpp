@@ -2,7 +2,7 @@
 #include "World.h"
 #include <stdlib.h>
 
-Human::Human(const Vector2& pos) : Animal(pos, 4, 5, 'H')
+Human::Human(const Vector2& pos) : Animal(pos, 4, 5, 10, 'H')
 {
 }
 
@@ -62,4 +62,10 @@ void Human::SetNextAction(char code)
 std::string Human::GetName() const
 {
 	return "Human";
+}
+
+void Human::Die(Organism* killer)
+{
+	world->SetPlayerAlive(false);
+	Animal::Die(killer);
 }

@@ -2,9 +2,9 @@
 #include "World.h"
 #include <cstdlib>
 #include <typeinfo>
-#include <iostream>
 
-Animal::Animal(const Vector2& pos, const int priority, const int strength, const char symbol) : Organism(pos, priority, strength, symbol)
+Animal::Animal(const Vector2& pos, const int priority, const int strength, const int breedingCooldown, const char symbol)
+	: Organism(pos, priority, strength, symbol), breedingCooldown(breedingCooldown)
 {
 }
 
@@ -25,8 +25,17 @@ void Animal::Collide(Organism* other)
 	else
 	{
 		// attack the other animal
-		GoBack();
 		std::cout << GetName() << " attacked " << other->GetName() << " on " << pos.x << ',' << pos.y << "\n";
+		if (GetStrength() >= other->GetStrength())
+		{
+			// this organism wins
+			other->Die(this);
+		}
+		else
+		{
+			// other organism wins
+			this->Die(other);
+		}
 	}
 }
 

@@ -23,7 +23,23 @@ int Organism::GetPriority() const
 	return priority;
 }
 
+int Organism::GetStrength() const
+{
+	return strength;
+}
+
+bool Organism::IsAlive() const
+{
+	return isAlive;
+}
+
 void Organism::Draw(char** buffer) const
 {
 	buffer[pos.x][pos.y] = symbol;
+}
+
+void Organism::Die(Organism* killer)
+{
+	isAlive = false;
+	std::cout << GetName() << " was killed by " << killer->GetName() << '\n';
 }

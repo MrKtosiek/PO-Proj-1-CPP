@@ -1,7 +1,5 @@
 #include <conio.h>
 #include "World.h"
-#include "Wolf.h"
-#include "Sheep.h"
 #include <iostream>
 
 World::World() : World::World(15, 15)
@@ -23,14 +21,16 @@ void World::AddOrganism(Organism* org)
 	organisms.push_back(org);
 }
 
-void World::GenerateOrganisms()
+void World::RemoveOrganism(Organism* org)
 {
-	for (int i = 0; i < 3; i++)
+	for (size_t i = 0; i < organisms.size(); i++)
 	{
-		Wolf* newWolf = new Wolf(GetRandomEmptyTile());
-		AddOrganism(newWolf);
-		Sheep* newSheep = new Sheep(GetRandomEmptyTile());
-		AddOrganism(newSheep);
+		if (organisms[i] == org)
+		{
+			organisms.erase(organisms.begin() + i);
+			delete org;
+			break;
+		}
 	}
 }
 
@@ -47,6 +47,16 @@ Organism* World::GetOrganism(const Vector2& pos) const
 const Vector2& World::GetSize() const
 {
 	return size;
+}
+
+bool World::IsPlayerAlive() const
+{
+	return playerAlive;
+}
+
+void World::SetPlayerAlive(const bool& value)
+{
+	playerAlive = value;
 }
 
 bool World::ContainsPos(Vector2 pos) const
@@ -130,6 +140,16 @@ void World::ExecuteTurn()
 		}
 	}
 
+	// remove dead organisms
+	for (size_t i = organisms.size() - 1; i > 0; i--)
+	{
+		if (!organisms[i]->IsAlive())
+		{
+			RemoveOrganism(organisms[i]);
+		}
+	}
+
+
 	std::cout << "Turn " << ++turnNumber << " finished\n";
 }
 
@@ -137,15 +157,12 @@ void World::DrawWorld()
 {
 	// create a buffer for the drawing
 	char** buffer = new char* [size.x];
-	int** density = new int* [size.x];
 	for (int x = 0; x < size.x; x++)
 	{
 		buffer[x] = new char[size.y + 1]();
-		density[x] = new int[size.y + 1]();
 		for (int y = 0; y < size.y; y++)
 		{
 			buffer[x][y] = ' ';
-			density[x][y] = 0;
 		}
 	}
 
@@ -153,33 +170,30 @@ void World::DrawWorld()
 	for (Organism* org : organisms)
 	{
 		org->Draw(buffer);
-		density[org->GetPosition().x][org->GetPosition().y]++;
 	}
 
 	// draw the horizontal part of the frame
 	_putch('#');
-	for (int y = 0; y < size.y; y++)
+	for (int y = 0; y < size.y * 2 + 1; y++)
 		_putch('-');
 	_cputs("#\n");
 
 	// draw the buffer on the console
 	for (int x = 0; x < size.x; x++)
 	{
-		_putch('|'); // vertical line
-		_cputs(buffer[x]);
+		_putch('|');
+		_putch(' ');
 		for (int y = 0; y < size.y; y++)
 		{
-			if (density[x][y] > 1)
-				_putch(density[x][y] + '0');
-			else
-				_putch(' ');
+			_putch(buffer[x][y]);
+			_putch(' ');
 		}
-		_cputs("|\n"); // vertical line
+		_cputs("|\n");
 	}
 
 	// draw the horizontal part of the frame
 	_putch('#');
-	for (int y = 0; y < size.y; y++)
+	for (int y = 0; y < size.y * 2 + 1; y++)
 		_putch('-');
 	_cputs("#\n");
 
@@ -187,8 +201,6 @@ void World::DrawWorld()
 	for (int x = 0; x < size.x; x++)
 	{
 		delete[] buffer[x];
-		delete[] density[x];
 	}
 	delete[] buffer;
-	delete[] density;
 }
