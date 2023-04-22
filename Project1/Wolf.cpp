@@ -10,6 +10,11 @@ Wolf::~Wolf()
 {
 }
 
+Wolf* Wolf::Clone(const Vector2& pos) const
+{
+	return new Wolf(pos);
+}
+
 std::string Wolf::GetName() const
 {
 	return "Wolf";

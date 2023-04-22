@@ -19,9 +19,11 @@ public:
 
 	virtual void Draw(char** buffer) const;
 	virtual std::string GetName() const = 0;
+	virtual Organism* Clone(const Vector2& pos) const = 0;
 
 protected:
 	Vector2 pos = { 0,0 };
+	Vector2 prevPos = { 0,0 };
 	int priority = 0;
 	int strength = 0;
 	char symbol = '%';

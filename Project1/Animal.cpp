@@ -20,13 +20,13 @@ void Animal::Collide(Organism* other)
 	std::cout << "Collision on " << pos.x << ',' << pos.y << " (" << GetName() << ", " << other->GetName() << ")\n";
 	if (GetName() == other->GetName())
 	{
-		// breed the animals
-		std::cout << "Breeding on " << pos.x << ',' << pos.y << '\n';
+		Breed((Animal*)other);
 	}
 	else
 	{
 		// attack the other animal
-
+		GoBack();
+		std::cout << GetName() << " attacked " << other->GetName() << " on " << pos.x << ',' << pos.y << "\n";
 	}
 }
 
@@ -39,6 +39,7 @@ void Animal::MoveTo(const Vector2& target)
 {
 	if (world->ContainsPos(target))
 	{
+		prevPos = pos;
 		pos = target;
 		std::cout << GetName() << " moved to " << pos.x << ',' << pos.y << '\n';
 	}
@@ -46,4 +47,34 @@ void Animal::MoveTo(const Vector2& target)
 	{
 		std::cout << GetName() << " couldn't move to " << target.x << ',' << target.y << '\n';
 	}
+}
+
+void Animal::GoBack()
+{
+	pos = prevPos;
+}
+
+void Animal::Breed(Animal* other)
+{
+	GoBack();
+	if (!world->HasEmptyNeighbor(other->GetPosition()))
+	{
+		std::cout << "Breeding failed on " << pos.x << ',' << pos.y << " (not enough space)\n";
+		return;
+	}
+	if (currentBreedingCooldown > 0 || other->currentBreedingCooldown > 0)
+	{
+		std::cout << "Breeding failed on " << pos.x << ',' << pos.y << " (cooldown)\n";
+		return;
+	}
+
+	Vector2 childPos = world->GetEmptyNeighbor(other->GetPosition());
+	Animal* child = Clone(childPos);
+	world->AddOrganism(child);
+
+	currentBreedingCooldown = breedingCooldown;
+	other->currentBreedingCooldown = other->breedingCooldown;
+	child->currentBreedingCooldown = child->breedingCooldown;
+
+	std::cout << "Breeding on " << child->pos.x << ',' << child->pos.y << "\n";
 }

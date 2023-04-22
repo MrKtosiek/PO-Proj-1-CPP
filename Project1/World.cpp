@@ -94,7 +94,7 @@ Vector2 World::GetEmptyNeighbor(const Vector2 pos) const
 			targets.push_back(n);
 	}
 
-	if (targets.size() == 0)
+	if (targets.size() > 0)
 		return targets[rand() % targets.size()];
 	else
 		return { -1,-1 };
@@ -112,17 +112,20 @@ void World::ExecuteTurn()
 	};
 	std::sort(organisms.begin(), organisms.end(), ComparePriorities());
 
+
 	// execute actions
-	for (Organism* org : organisms)
+	size_t orgCount = organisms.size();
+	for (size_t i = 0; i < orgCount; i++)
 	{
-		org->Action();
+		std::cout << i + 1 << ". ";
+		organisms[i]->Action();
 		
 		// handle collisions
-		for (Organism* other : organisms)
+		for (size_t j = 0; j < organisms.size(); j++)
 		{
-			if (org != other && org->GetPosition() == other->GetPosition())
+			if (i != j && organisms[i]->GetPosition() == organisms[j]->GetPosition())
 			{
-				org->Collide(other);
+				organisms[i]->Collide(organisms[j]);
 			}
 		}
 	}
@@ -134,17 +137,23 @@ void World::DrawWorld()
 {
 	// create a buffer for the drawing
 	char** buffer = new char* [size.x];
+	int** density = new int* [size.x];
 	for (int x = 0; x < size.x; x++)
 	{
 		buffer[x] = new char[size.y + 1]();
+		density[x] = new int[size.y + 1]();
 		for (int y = 0; y < size.y; y++)
+		{
 			buffer[x][y] = ' ';
+			density[x][y] = 0;
+		}
 	}
 
 	// draw all organisms
 	for (Organism* org : organisms)
 	{
 		org->Draw(buffer);
+		density[org->GetPosition().x][org->GetPosition().y]++;
 	}
 
 	// draw the horizontal part of the frame
@@ -158,6 +167,13 @@ void World::DrawWorld()
 	{
 		_putch('|'); // vertical line
 		_cputs(buffer[x]);
+		for (int y = 0; y < size.y; y++)
+		{
+			if (density[x][y] > 1)
+				_putch(density[x][y] + '0');
+			else
+				_putch(' ');
+		}
 		_cputs("|\n"); // vertical line
 	}
 
@@ -169,6 +185,10 @@ void World::DrawWorld()
 
 	// deallocate the buffer
 	for (int x = 0; x < size.x; x++)
+	{
 		delete[] buffer[x];
+		delete[] density[x];
+	}
 	delete[] buffer;
+	delete[] density;
 }

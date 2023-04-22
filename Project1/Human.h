@@ -9,6 +9,8 @@ public:
 	~Human();
 
 	virtual void Movement() override;
+	virtual Human* Clone(const Vector2& pos) const override;
+
 	void SetNextAction(const char code);
 
 	std::string GetName() const;

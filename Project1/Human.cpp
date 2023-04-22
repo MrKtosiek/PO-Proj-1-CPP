@@ -29,6 +29,11 @@ void Human::Movement()
 	MoveTo(target);
 }
 
+Human* Human::Clone(const Vector2& pos) const
+{
+	return new Human(pos);
+}
+
 void Human::SetNextAction(char code)
 {
 	switch (code)

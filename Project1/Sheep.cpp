@@ -10,6 +10,11 @@ Sheep::~Sheep()
 {
 }
 
+Sheep* Sheep::Clone(const Vector2& pos) const
+{
+	return new Sheep(pos);
+}
+
 std::string Sheep::GetName() const
 {
 	return "Sheep";

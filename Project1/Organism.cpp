@@ -1,7 +1,7 @@
 #include "Organism.h"
 
 Organism::Organism(const Vector2& pos, const int priority, const int strength, const char symbol)
-	: pos(pos), priority(priority), strength(strength), symbol(symbol)
+	: pos(pos), prevPos(pos), priority(priority), strength(strength), symbol(symbol)
 {
 }
 Organism::~Organism()
