@@ -10,6 +10,9 @@
 #include "Plant.h"
 
 #include <crtdbg.h>
+#include "Fox.h"
+#include "Turtle.h"
+#include "Antelope.h"
 
 using namespace std;
 
@@ -24,15 +27,35 @@ void Program()
 	world.AddOrganism((Organism*)player);
 
 	// populate the world
-	for (int i = 0; i < 2; i++)
+	int wolfCount = 0;
+	int sheepCount = 5;
+	int foxCount = 5;
+	int turtleCount = 5;
+	int antelopeCount = 5;
+	for (int i = 0; i < wolfCount; i++)
 	{
 		Wolf* newWolf = new Wolf(world.GetRandomEmptyTile());
 		world.AddOrganism(newWolf);
 	}
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < sheepCount; i++)
 	{
 		Sheep* newSheep = new Sheep(world.GetRandomEmptyTile());
 		world.AddOrganism(newSheep);
+	}
+	for (int i = 0; i < foxCount; i++)
+	{
+		Fox* newFox = new Fox(world.GetRandomEmptyTile());
+		world.AddOrganism(newFox);
+	}
+	for (int i = 0; i < turtleCount; i++)
+	{
+		Turtle* newTurtle = new Turtle(world.GetRandomEmptyTile());
+		world.AddOrganism(newTurtle);
+	}
+	for (int i = 0; i < antelopeCount; i++)
+	{
+		Antelope* newAntelope = new Antelope(world.GetRandomEmptyTile());
+		world.AddOrganism(newAntelope);
 	}
 
 

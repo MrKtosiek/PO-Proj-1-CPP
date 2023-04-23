@@ -120,20 +120,23 @@ void World::ExecuteTurn()
 			return (org1->GetPriority() > org2->GetPriority());
 		}
 	};
-	std::sort(organisms.begin(), organisms.end(), ComparePriorities());
+	std::stable_sort(organisms.begin(), organisms.end(), ComparePriorities());
 
 
 	// execute actions
 	size_t orgCount = organisms.size();
 	for (size_t i = 0; i < orgCount; i++)
 	{
+		if (!organisms[i]->IsAlive())
+			continue;
+
 		std::cout << i + 1 << ". ";
 		organisms[i]->Action();
 		
 		// handle collisions
 		for (size_t j = 0; j < organisms.size(); j++)
 		{
-			if (i != j && organisms[i]->GetPosition() == organisms[j]->GetPosition())
+			if (i != j && organisms[j]->IsAlive() && organisms[i]->GetPosition() == organisms[j]->GetPosition())
 			{
 				organisms[i]->Collide(organisms[j]);
 			}
@@ -141,7 +144,7 @@ void World::ExecuteTurn()
 	}
 
 	// remove dead organisms
-	for (size_t i = organisms.size() - 1; i > 0; i--)
+	for (int i = organisms.size() - 1; i >= 0; i--)
 	{
 		if (!organisms[i]->IsAlive())
 		{

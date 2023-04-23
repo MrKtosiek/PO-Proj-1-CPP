@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "Vector2.h"
 #include "Organism.h"
-//class Organism;
 
 class World
 {

@@ -33,6 +33,11 @@ bool Organism::IsAlive() const
 	return isAlive;
 }
 
+void Organism::GoBack()
+{
+	pos = prevPos;
+}
+
 void Organism::Draw(char** buffer) const
 {
 	buffer[pos.x][pos.y] = symbol;

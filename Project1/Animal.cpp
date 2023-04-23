@@ -17,25 +17,29 @@ void Animal::Action()
 
 void Animal::Collide(Organism* other)
 {
-	std::cout << "Collision on " << pos.x << ',' << pos.y << " (" << GetName() << ", " << other->GetName() << ")\n";
+	std::cout << "Collision on " << pos << " (" << GetName() << ", " << other->GetName() << ")\n";
 	if (GetName() == other->GetName())
 	{
 		Breed((Animal*)other);
 	}
 	else
 	{
-		// attack the other animal
-		std::cout << GetName() << " attacked " << other->GetName() << " on " << pos.x << ',' << pos.y << "\n";
-		if (GetStrength() >= other->GetStrength())
-		{
-			// this organism wins
-			other->Die(this);
-		}
-		else
-		{
-			// other organism wins
-			this->Die(other);
-		}
+		other->Hit(this);
+	}
+}
+
+void Animal::Hit(Organism* attacker)
+{
+	std::cout << attacker->GetName() << " attacked " << GetName() << " on " << pos << "\n";
+	if (attacker->GetStrength() >= GetStrength())
+	{
+		// attacker wins
+		this->Die(attacker);
+	}
+	else
+	{
+		// this organism wins
+		attacker->Die(this);
 	}
 }
 
@@ -50,17 +54,12 @@ void Animal::MoveTo(const Vector2& target)
 	{
 		prevPos = pos;
 		pos = target;
-		std::cout << GetName() << " moved to " << pos.x << ',' << pos.y << '\n';
+		std::cout << GetName() << " moved to " << pos << '\n';
 	}
 	else
 	{
-		std::cout << GetName() << " couldn't move to " << target.x << ',' << target.y << '\n';
+		std::cout << GetName() << " couldn't move to " << target << '\n';
 	}
-}
-
-void Animal::GoBack()
-{
-	pos = prevPos;
 }
 
 void Animal::Breed(Animal* other)
@@ -68,12 +67,12 @@ void Animal::Breed(Animal* other)
 	GoBack();
 	if (!world->HasEmptyNeighbor(other->GetPosition()))
 	{
-		std::cout << "Breeding failed on " << pos.x << ',' << pos.y << " (not enough space)\n";
+		std::cout << "Breeding failed on " << pos << " (not enough space)\n";
 		return;
 	}
 	if (currentBreedingCooldown > 0 || other->currentBreedingCooldown > 0)
 	{
-		std::cout << "Breeding failed on " << pos.x << ',' << pos.y << " (cooldown)\n";
+		std::cout << "Breeding failed on " << pos << " (cooldown)\n";
 		return;
 	}
 
@@ -85,5 +84,5 @@ void Animal::Breed(Animal* other)
 	other->currentBreedingCooldown = other->breedingCooldown;
 	child->currentBreedingCooldown = child->breedingCooldown;
 
-	std::cout << "Breeding on " << child->pos.x << ',' << child->pos.y << "\n";
+	std::cout << "Breeding on " << child->pos << "\n";
 }

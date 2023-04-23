@@ -36,6 +36,15 @@
     <ClCompile Include="Sheep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Fox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Turtle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Antelope.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
@@ -60,6 +69,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sheep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Antelope.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

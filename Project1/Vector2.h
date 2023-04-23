@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct Vector2
 {
@@ -17,5 +18,11 @@ struct Vector2
 	bool operator==(const Vector2& other) const
 	{
 		return x == other.x && y == other.y;
+	}
+
+	friend std::ostream& operator<<(std::ostream& str, const Vector2& vector)
+	{
+		str << vector.x << ',' << vector.y;
+		return str;
 	}
 };

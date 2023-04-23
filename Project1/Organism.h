@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Vector2.h"
-//#include "World.h"
+
 class World;
 
 class Organism
@@ -19,6 +19,8 @@ public:
 
 	virtual void Action() = 0;
 	virtual void Collide(Organism* other) = 0;
+	virtual void Hit(Organism* attacker) = 0;
+	virtual void GoBack();
 
 	virtual void Draw(char** buffer) const;
 	virtual std::string GetName() const = 0;
