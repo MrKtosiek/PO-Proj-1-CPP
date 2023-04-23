@@ -8,7 +8,6 @@ public:
 
 	virtual void Action() override;
 	virtual void Collide(Organism* other) override;
-	virtual void Hit(Organism* attacker) override;
 	virtual Animal* Clone(const Vector2& pos) const override = 0;
 
 

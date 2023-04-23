@@ -28,21 +28,6 @@ void Animal::Collide(Organism* other)
 	}
 }
 
-void Animal::Hit(Organism* attacker)
-{
-	std::cout << attacker->GetName() << " attacked " << GetName() << " on " << pos << "\n";
-	if (attacker->GetStrength() >= GetStrength())
-	{
-		// attacker wins
-		this->Die(attacker);
-	}
-	else
-	{
-		// this organism wins
-		attacker->Die(this);
-	}
-}
-
 void Animal::Movement()
 {
 	MoveTo(pos.GetNeighbor(rand() % 4));

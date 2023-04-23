@@ -15,11 +15,12 @@ public:
 	virtual Vector2 GetPosition() const;
 	virtual int GetPriority() const;
 	virtual int GetStrength() const;
+	virtual void SetStrength(const int value);
 	virtual bool IsAlive() const;
 
 	virtual void Action() = 0;
 	virtual void Collide(Organism* other) = 0;
-	virtual void Hit(Organism* attacker) = 0;
+	virtual void Hit(Organism* attacker);
 	virtual void GoBack();
 
 	virtual void Draw(char** buffer) const;

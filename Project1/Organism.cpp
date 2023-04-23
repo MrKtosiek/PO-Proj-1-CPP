@@ -28,9 +28,29 @@ int Organism::GetStrength() const
 	return strength;
 }
 
+void Organism::SetStrength(const int value)
+{
+	strength = value;
+}
+
 bool Organism::IsAlive() const
 {
 	return isAlive;
+}
+
+void Organism::Hit(Organism* attacker)
+{
+	std::cout << attacker->GetName() << " attacked " << GetName() << " on " << pos << "\n";
+	if (attacker->GetStrength() >= GetStrength())
+	{
+		// attacker wins
+		this->Die(attacker);
+	}
+	else
+	{
+		// this organism wins
+		attacker->Die(this);
+	}
 }
 
 void Organism::GoBack()

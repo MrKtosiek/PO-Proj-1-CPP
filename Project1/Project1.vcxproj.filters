@@ -45,6 +45,24 @@
     <ClCompile Include="Antelope.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dandelion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Guarana.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Belladonna.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Heracleum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
@@ -78,6 +96,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Antelope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dandelion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Guarana.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Belladonna.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Heracleum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
