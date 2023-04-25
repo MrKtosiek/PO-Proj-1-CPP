@@ -17,7 +17,7 @@ void Animal::Action()
 
 void Animal::Collide(Organism* other)
 {
-	std::cout << "Collision on " << pos << " (" << GetName() << ", " << other->GetName() << ")\n";
+	world->Logs() << "Collision on " << pos << " (" << GetName() << ", " << other->GetName() << ")\n";
 	if (GetName() == other->GetName())
 	{
 		Breed((Animal*)other);
@@ -39,11 +39,11 @@ void Animal::MoveTo(const Vector2& target)
 	{
 		prevPos = pos;
 		pos = target;
-		std::cout << GetName() << " moved to " << pos << '\n';
+		world->Logs() << GetName() << " moved to " << pos << '\n';
 	}
 	else
 	{
-		std::cout << GetName() << " couldn't move to " << target << '\n';
+		world->Logs() << GetName() << " couldn't move to " << target << '\n';
 	}
 }
 
@@ -52,12 +52,12 @@ void Animal::Breed(Animal* other)
 	GoBack();
 	if (!world->HasEmptyNeighbor(other->GetPosition()))
 	{
-		std::cout << "Breeding failed on " << pos << " (not enough space)\n";
+		world->Logs() << "Breeding failed on " << pos << " (not enough space)\n";
 		return;
 	}
 	if (currentBreedingCooldown > 0 || other->currentBreedingCooldown > 0)
 	{
-		std::cout << "Breeding failed on " << pos << " (cooldown)\n";
+		world->Logs() << "Breeding failed on " << pos << " (cooldown)\n";
 		return;
 	}
 
@@ -69,5 +69,5 @@ void Animal::Breed(Animal* other)
 	other->currentBreedingCooldown = other->breedingCooldown;
 	child->currentBreedingCooldown = child->breedingCooldown;
 
-	std::cout << "Breeding on " << child->pos << "\n";
+	world->Logs() << "Breeding on " << child->pos << "\n";
 }

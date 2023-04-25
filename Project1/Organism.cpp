@@ -1,4 +1,5 @@
 #include "Organism.h"
+#include "World.h"
 
 Organism::Organism(const Vector2& pos, const int priority, const int strength, const char symbol)
 	: pos(pos), prevPos(pos), priority(priority), strength(strength), symbol(symbol)
@@ -18,6 +19,11 @@ Vector2 Organism::GetPosition() const
 	return pos;
 }
 
+void Organism::SetPosition(const Vector2& value)
+{
+	pos = value;
+}
+
 int Organism::GetPriority() const
 {
 	return priority;
@@ -26,6 +32,11 @@ int Organism::GetPriority() const
 int Organism::GetStrength() const
 {
 	return strength;
+}
+
+char Organism::GetSymbol() const
+{
+	return symbol;
 }
 
 void Organism::SetStrength(const int value)
@@ -40,7 +51,7 @@ bool Organism::IsAlive() const
 
 void Organism::Hit(Organism* attacker)
 {
-	std::cout << attacker->GetName() << " attacked " << GetName() << " on " << pos << "\n";
+	world->Logs() << attacker->GetName() << " attacked " << GetName() << " on " << pos << "\n";
 	if (attacker->GetStrength() >= GetStrength())
 	{
 		// attacker wins
@@ -65,6 +76,9 @@ void Organism::Draw(char** buffer) const
 
 void Organism::Die(Organism* killer)
 {
+	if (!isAlive)
+		return;
+
 	isAlive = false;
-	std::cout << GetName() << " was killed by " << killer->GetName() << '\n';
+	world->Logs() << GetName() << " [" << GetStrength() << "] was killed by " << killer->GetName() << " [" << killer->GetStrength() << "]\n";
 }

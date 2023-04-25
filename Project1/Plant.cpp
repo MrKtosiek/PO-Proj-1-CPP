@@ -16,7 +16,7 @@ void Plant::Action()
 	}
 	else
 	{
-		std::cout << GetName() << " didn't grow\n";
+		//world->Logs() << GetName() << " didn't grow\n";
 	}
 }
 
@@ -31,10 +31,10 @@ void Plant::Grow() const
 		Vector2 childPos = world->GetEmptyNeighbor(pos);
 		Plant* child = Clone(childPos);
 		world->AddOrganism(child);
-		std::cout << GetName() << " spread onto " << childPos << "\n";
+		world->Logs() << GetName() << " spread onto " << childPos << "\n";
 	}
 	else
 	{
-		std::cout << GetName() << " couldn't spread on " << pos << " (not enough space)\n";
+		world->Logs() << GetName() << " couldn't spread on " << pos << " (not enough space)\n";
 	}
 }

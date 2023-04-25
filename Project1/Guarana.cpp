@@ -12,9 +12,9 @@ Guarana::~Guarana()
 
 void Guarana::Hit(Organism* attacker)
 {
-	attacker->SetStrength(attacker->GetStrength() + 3);
 	Plant::Hit(attacker);
-	std::cout << GetName() << " made " << attacker->GetName() << " stronger\n";
+	attacker->SetStrength(attacker->GetStrength() + 3);
+	world->Logs() << GetName() << " made " << attacker->GetName() << " stronger [" << attacker->GetStrength() << "]\n";
 }
 
 Guarana* Guarana::Clone(const Vector2& pos) const

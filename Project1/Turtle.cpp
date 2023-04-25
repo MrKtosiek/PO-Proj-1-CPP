@@ -14,7 +14,7 @@ void Turtle::Hit(Organism* attacker)
 {
 	if (attacker->GetStrength() < 5)
 	{
-		std::cout << GetName() << " deflected an attack from " << attacker->GetName() << " on " << pos << "\n";
+		world->Logs() << GetName() << " deflected an attack from " << attacker->GetName() << " on " << pos << "\n";
 		attacker->GoBack();
 		return;
 	}
@@ -27,7 +27,7 @@ void Turtle::Movement()
 	if (rand() % 4 == 0)
 		MoveTo(pos.GetNeighbor(rand() % 4));
 	else
-		std::cout << GetName() << " stayed on " << pos << "\n";
+		world->Logs() << GetName() << " stayed on " << pos << "\n";
 }
 Turtle* Turtle::Clone(const Vector2& pos) const
 {

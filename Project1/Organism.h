@@ -13,8 +13,10 @@ public:
 
 	virtual void SetWorld(World* world);
 	virtual Vector2 GetPosition() const;
+	virtual void SetPosition(const Vector2& value);
 	virtual int GetPriority() const;
 	virtual int GetStrength() const;
+	virtual char GetSymbol() const;
 	virtual void SetStrength(const int value);
 	virtual bool IsAlive() const;
 

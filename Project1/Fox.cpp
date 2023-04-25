@@ -25,7 +25,7 @@ void Fox::Movement()
 		}
 	}
 
-	std::cout << GetName() << " didn't move\n";
+	world->Logs() << GetName() << " didn't move\n";
 }
 
 Fox* Fox::Clone(const Vector2& pos) const

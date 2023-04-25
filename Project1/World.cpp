@@ -1,6 +1,7 @@
 #include <conio.h>
 #include "World.h"
 #include <iostream>
+#include <sstream>
 
 World::World() : World::World(15, 15)
 {
@@ -8,6 +9,13 @@ World::World() : World::World(15, 15)
 World::World(int height, int width)
 {
 	size = { height, width };
+}
+World::World(const World& orig)
+{
+	size = orig.size;
+	turnNumber = orig.turnNumber;
+	playerAlive = orig.playerAlive;
+	organisms = std::vector<Organism*>(orig.organisms);
 }
 World::~World()
 {
@@ -44,9 +52,29 @@ Organism* World::GetOrganism(const Vector2& pos) const
 	return nullptr;
 }
 
+std::vector<Organism*>& World::GetOrganisms()
+{
+	return organisms;
+}
+
 const Vector2& World::GetSize() const
 {
 	return size;
+}
+
+const size_t World::GetTurnNumber() const
+{
+	return turnNumber;
+}
+
+void World::SetTurnNumber(const size_t& value)
+{
+	turnNumber = value;
+}
+
+std::stringstream& World::Logs()
+{
+	return logs;
 }
 
 bool World::IsPlayerAlive() const
@@ -130,7 +158,7 @@ void World::ExecuteTurn()
 		if (!organisms[i]->IsAlive())
 			continue;
 
-		std::cout << i + 1 << ". ";
+		//world->Logs() << i + 1 << ". ";
 		organisms[i]->Action();
 		
 		// handle collisions
@@ -153,7 +181,7 @@ void World::ExecuteTurn()
 	}
 
 
-	std::cout << "Turn " << ++turnNumber << " finished\n";
+	logs << "Turn " << ++turnNumber << " finished\n";
 }
 
 void World::DrawWorld()
@@ -206,4 +234,26 @@ void World::DrawWorld()
 		delete[] buffer[x];
 	}
 	delete[] buffer;
+}
+
+void World::DrawLogs()
+{
+	std::cout << " --- Logs: ---\n\n" << logs.str();
+}
+
+void World::ClearLogs()
+{
+	logs.str("");
+}
+
+World& World::operator=(const World& other)
+{
+	World tmp(other);
+
+	std::swap(size, tmp.size);
+	std::swap(turnNumber, tmp.turnNumber);
+	std::swap(playerAlive, tmp.playerAlive);
+	std::swap(organisms, tmp.organisms);
+
+	return *this;
 }
