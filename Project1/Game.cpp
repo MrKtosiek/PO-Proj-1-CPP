@@ -166,7 +166,7 @@ void Game::LoadWorld()
 		{
 		case 'H':
 		{
-			Human * newHuman = new Human(pos);
+			Human* newHuman = new Human(pos);
 			int ability;
 			file >> ability;
 			newHuman->SetAbilityDurationLeft(ability);

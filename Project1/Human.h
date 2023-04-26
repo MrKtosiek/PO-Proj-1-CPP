@@ -9,6 +9,7 @@ public:
 	~Human();
 
 	bool IsAbilityActive() const;
+	bool CanActivateAbility() const;
 	void ActivateAbility();
 	int GetAbilityDurationLeft() const;
 	void SetAbilityDurationLeft(const int& value);

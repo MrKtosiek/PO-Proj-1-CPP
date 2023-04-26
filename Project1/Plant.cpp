@@ -14,10 +14,10 @@ void Plant::Action()
 	{
 		Grow();
 	}
-	else
+	/*else
 	{
-		//world->Logs() << GetName() << " didn't grow\n";
-	}
+		world->Logs() << GetName() << " didn't grow\n";
+	}*/
 }
 
 void Plant::Collide(Organism* other)

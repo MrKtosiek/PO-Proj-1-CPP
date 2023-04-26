@@ -15,6 +15,11 @@ bool Human::IsAbilityActive() const
 	return abilityLeft > 0;
 }
 
+bool Human::CanActivateAbility() const
+{
+	return abilityLeft <= -5;
+}
+
 void Human::ActivateAbility()
 {
 	world->Logs() << GetName() << " activated a special ability!\n";
@@ -33,7 +38,7 @@ void Human::SetAbilityDurationLeft(const int& value)
 
 void Human::Action()
 {
-	if (nextAction == HumanAction::ABILITY && !IsAbilityActive())
+	if (nextAction == HumanAction::ABILITY && CanActivateAbility())
 	{
 		ActivateAbility();
 	}

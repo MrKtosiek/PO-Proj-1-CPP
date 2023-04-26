@@ -8,7 +8,7 @@ int main()
 {
 	srand(time(nullptr));
 
-	Game game(20, 20);
+	Game game(18, 18);
 
 	char input = 0;
 	while (input != 'q')
