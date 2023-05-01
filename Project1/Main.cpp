@@ -8,7 +8,13 @@ int main()
 {
 	srand(time(nullptr));
 
-	Game game(18, 18);
+	Vector2 worldSize;
+	std::cout << "Enter world height: ";
+	std::cin >> worldSize.x;
+	std::cout << "Enter world width: ";
+	std::cin >> worldSize.y;
+
+	Game game(worldSize.x, worldSize.y);
 
 	char input = 0;
 	while (input != 'q')

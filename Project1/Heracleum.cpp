@@ -14,9 +14,9 @@ void Heracleum::Action()
 {
 	Plant::Action();
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		Vector2 target = pos.GetNeighbor(i);
+		Vector2 target = pos.GetNeighbor8Way(i);
 		Animal* animal = dynamic_cast<Animal*>(world->GetOrganism(target));
 		if (animal != nullptr)
 		{

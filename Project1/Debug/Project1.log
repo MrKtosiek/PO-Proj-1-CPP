@@ -1,3 +1,2 @@
-﻿  Main.cpp
-D:\Studia\Programowanie Obiektowe\PO-Proj-1\Project1\Main.cpp(9,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Project1.vcxproj -> D:\Studia\Programowanie Obiektowe\PO-Proj-1\Project1\Debug\Project1.exe
+﻿  Heracleum.cpp
+  Project1.vcxproj -> D:\Studia\PO\PO-Proj-1\Project1\Debug\Project1.exe

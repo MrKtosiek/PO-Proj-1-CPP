@@ -35,7 +35,7 @@ protected:
 	Vector2 prevPos = { 0,0 };
 	int priority = 0;
 	int strength = 0;
-	char symbol = '%';
+	char symbol = 0;
 	bool isAlive = true;
 	World* world = nullptr;
 };

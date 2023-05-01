@@ -30,14 +30,14 @@ void Game::GenerateWorld()
 {
 	// populate the world
 	int wolfCount = 3;
-	int sheepCount = 4;
+	int sheepCount = 3;
 	int foxCount = 3;
-	int turtleCount = 4;
+	int turtleCount = 3;
 	int antelopeCount = 3;
-	int grassCount = 4;
+	int grassCount = 3;
 	int dandelionCount = 2;
 	int guaranaCount = 2;
-	int belladonnaCount = 2;
+	int belladonnaCount = 1;
 	int heracleumCount = 1;
 	for (int i = 0; i < wolfCount; i++)
 	{
@@ -129,6 +129,9 @@ void Game::SaveWorld()
 	}
 
 	file.close();
+
+	std::cout << "World state saved successfully!\n";
+	
 }
 
 void Game::LoadWorld()
@@ -240,6 +243,9 @@ void Game::LoadWorld()
 	}
 
 	file.close();
+
+	std::cout << "World state loaded successfully\n";
+	world.DrawWorld();
 }
 
 void Game::DrawMenu()
