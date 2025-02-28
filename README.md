@@ -1,2 +1,2 @@
-# Object Oriented Programming - World simulation
+# Object Oriented Programming - World simulation (C++)
 University project
